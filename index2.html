@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syllabridge — Your Course Dashboard</title>
+  <link rel="stylesheet" href="style2.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- BG -->
+  <div class="bg-mesh">
+    <div class="mesh-orb m1"></div>
+    <div class="mesh-orb m2"></div>
+    <div class="mesh-orb m3"></div>
+    <canvas id="gridCanvas"></canvas>
+  </div>
+
+  <!-- ══ LANDING / CONTINUE SCREEN ══════════════════════════ -->
+  <div class="landing-screen" id="landingScreen">
+    <header class="land-header">
+      <div class="logo"><span class="logo-hex">⬡</span>Syllabridge</div>
+      <span class="land-badge">Course Dashboard</span>
+    </header>
+
+    <div class="land-body">
+      <div class="land-card" id="landCard">
+        <div class="land-icon-ring">
+          <svg viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="38" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4" class="spin-ring"/>
+            <text x="40" y="47" text-anchor="middle" font-size="28">🎓</text>
+          </svg>
+        </div>
+        <h1 class="land-title">Your Course is Ready</h1>
+        <p class="land-sub">Claude AI has curated a full learning path just for you. Access your video lectures, resources and AI-generated week-by-week lecture planner — all in one place.</p>
+
+        <div class="land-meta" id="landMeta">
+          <!-- Filled by JS from localStorage / URL params -->
+          <div class="meta-pill" id="metaGoal">🎯 Full Stack Development</div>
+          <div class="meta-pill" id="metaLevel">🌿 Intermediate</div>
+          <div class="meta-pill" id="metaDuration">📅 12 Weeks</div>
+          <div class="meta-pill" id="metaHours">⏱ 10 hrs/week</div>
+        </div>
+
+        <div class="land-features">
+          <div class="feat-item"><span class="feat-dot v"></span>Video Lectures</div>
+          <div class="feat-item"><span class="feat-dot p"></span>Lecture Planner</div>
+          <div class="feat-item"><span class="feat-dot l"></span>LeetCode Links</div>
+          <div class="feat-item"><span class="feat-dot r"></span>Resources</div>
+        </div>
+
+        <a href="index3.html"><button class="btn-continue" id="continueBtn">
+          <span>Enter Your Dashboard</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ DASHBOARD ══════════════════════════════════════════ -->
+  <div class="dashboard hidden" id="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="logo sidebar-logo"><span class="logo-hex">⬡</span>Syllabridge</div>
+        <button class="sidebar-close" id="sidebarClose" title="Close sidebar">✕</button>
+      </div>
+
+      <div class="course-info">
+        <div class="course-topic" id="sidebarTopic">Full Stack Development</div>
+        <div class="course-meta-row">
+          <span id="sidebarLevel">Intermediate</span>
+          <span class="dot-sep">·</span>
+          <span id="sidebarDuration">12 Weeks</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+          </div>
+          <span class="progress-label" id="progressLabel">0% Complete</span>
+        </div>
+      </div>
+
+      <!-- Nav tabs -->
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-tab="videos">
+          <span class="nav-icon">▶</span> Video Lectures
+        </button>
+        <button class="nav-btn" data-tab="planner">
+          <span class="nav-icon">📋</span> Lecture Planner
+        </button>
+        <button class="nav-btn" data-tab="resources">
+          <span class="nav-icon">🔗</span> Resources
+        </button>
+      </nav>
+
+      <!-- Playlist -->
+      <div class="playlist" id="playlist">
+        <!-- Injected by JS -->
+      </div>
+    </aside>
+
+    <!-- Main Panel -->
+    <main class="main-panel">
+
+      <!-- Top bar -->
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn" title="Toggle sidebar">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="topbar-title" id="topbarTitle">Video Lectures</div>
+        <div class="topbar-right">
+          <span class="kbd-hint" id="topbarMeta"></span>
+          <button class="btn-sm-outline" id="plannerQuickBtn">📋 Open Planner</button>
+        </div>
+      </div>
+
+      <!-- ── TAB: VIDEOS ──────────────────────────────────── -->
+      <div class="tab-panel active" id="tab-videos">
+        <div class="video-layout">
+
+          <!-- Player -->
+          <div class="player-area">
+            <div class="player-wrap" id="playerWrap">
+              <div class="player-placeholder" id="playerPlaceholder">
+                <div class="play-big">▶</div>
+                <p>Select a lecture from the playlist to begin</p>
+              </div>
+              <div id="youtubeEmbed" class="yt-embed hidden"></div>
+            </div>
+
+            <!-- Video info -->
+            <div class="video-info" id="videoInfo">
+              <div class="vi-top">
+                <div>
+                  <div class="vi-title" id="viTitle">Select a video to start</div>
+                  <div class="vi-meta" id="viMeta"></div>
+                </div>
+                <div class="vi-actions">
+                  <button class="vi-btn" id="markDoneBtn" title="Mark as done">✓ Mark Done</button>
+                  <button class="vi-btn" id="openYTBtn" title="Open in YouTube">↗ YouTube</button>
+                </div>
+              </div>
+              <div class="vi-desc" id="viDesc"></div>
+              <div class="lc-row" id="lcRow"></div>
+            </div>
+
+            <!-- Controls -->
+            <div class="vid-nav-row">
+              <button class="vid-nav-btn" id="prevBtn">← Previous</button>
+              <span class="vid-nav-count" id="vidNavCount">—</span>
+              <button class="vid-nav-btn primary" id="nextBtn">Next →</button>
+            </div>
+          </div>
+
+          <!-- Inline mini-playlist (desktop) -->
+          <div class="mini-playlist" id="miniPlaylist">
+            <div class="mp-header">
+              <span>Playlist</span>
+              <span class="mp-count" id="mpCount"></span>
+            </div>
+            <div class="mp-list" id="mpList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB: PLANNER ──────────────────────────────────── -->
+      <div class="tab-panel hidden" id="tab-planner">
+        <div class="planner-area">
+          <div class="planner-header">
+            <div>
+              <h2 class="planner-title">Week-by-Week Lecture Plan</h2>
+              <p class="planner-sub" id="plannerSub">Your personalised AI-curated study schedule</p>
+            </div>
+            <div class="planner-header-right">
+              <div class="overall-progress">
+                <svg class="ring-svg" viewBox="0 0 44 44">
+                  <circle cx="22" cy="22" r="18" stroke="var(--border)" stroke-width="3" fill="none"/>
+                  <circle cx="22" cy="22" r="18" stroke="var(--accent)" stroke-width="3" fill="none"
+                    stroke-dasharray="113" stroke-dashoffset="113"
+                    id="ringProgress" stroke-linecap="round"
+                    transform="rotate(-90 22 22)"/>
+                </svg>
+                <div class="ring-label">
+                  <span id="ringPct">0%</span>
+                  <small>done</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="week-grid" id="weekGrid">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB: RESOURCES ────────────────────────────────── -->
+      <div class="tab-panel hidden" id="tab-resources">
+        <div class="resources-area">
+          <h2 class="planner-title">Curated Resources</h2>
+          <p class="planner-sub">Hand-picked free resources from GitHub, YouTube & Docs</p>
+          <div class="res-grid" id="resGrid">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="script2.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syllabridge — Start Your Journey</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-layer">
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">Syllabridge</span>
+    </div>
+    <div class="header-tag">ES-251 Mini Project · 2025-26</div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="hero-label">
+        <span class="pulse-dot"></span>
+        AI-Curated · Free · Structured
+      </div>
+      <h1 class="hero-title">
+        What do you want<br />
+        <em>to master?</em>
+      </h1>
+      <p class="hero-subtitle">
+        Enter your learning goal. Claude AI will curate a complete, structured course —<br class="br-md" />
+        with resources, weekly schedule, milestones & LeetCode practice. Free forever.
+      </p>
+    </section>
+
+    <!-- Form Card -->
+    <section class="form-section" id="form-section">
+      <div class="form-card">
+
+        <!-- Step indicator -->
+        <div class="step-bar">
+          <div class="step active" data-step="1">
+            <span class="step-num">1</span>
+            <span class="step-label">Your Goal</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" data-step="2">
+            <span class="step-num">2</span>
+            <span class="step-label">Preferences</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" data-step="3">
+            <span class="step-num">3</span>
+            <span class="step-label">Generate</span>
+          </div>
+        </div>
+
+        <form id="courseForm" novalidate>
+
+          <!-- ── STEP 1 ── -->
+          <div class="form-step" id="step-1">
+            <div class="field-group">
+              <label class="field-label" for="courseGoal">Your Learning Goal</label>
+              <div class="input-wrapper">
+                <textarea
+                  id="courseGoal"
+                  name="courseGoal"
+                  rows="3"
+                  class="field-input"
+                  placeholder="e.g. Master Full Stack Development, Learn AI/ML from scratch, Cybersecurity for beginners…"
+                  maxlength="300"
+                ></textarea>
+                <div class="char-counter"><span id="charCount">0</span>/300</div>
+              </div>
+              <div class="field-error" id="goalError">Please describe your learning goal.</div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Suggested Topics</label>
+              <div class="chips" id="chips">
+                <button type="button" class="chip" data-value="Master AI / Machine Learning">🤖 AI / ML</button>
+                <button type="button" class="chip" data-value="Full Stack Web Development">🌐 Full Stack Dev</button>
+                <button type="button" class="chip" data-value="Cybersecurity Fundamentals">🔐 Cybersecurity</button>
+                <button type="button" class="chip" data-value="Data Science with Python">📊 Data Science</button>
+                <button type="button" class="chip" data-value="Cloud Computing & DevOps">☁️ Cloud & DevOps</button>
+                <button type="button" class="chip" data-value="Android / iOS App Development">📱 App Dev</button>
+                <button type="button" class="chip" data-value="DSA & Competitive Programming">🧩 DSA & CP</button>
+                <button type="button" class="chip" data-value="Blockchain & Web3">⛓️ Blockchain</button>
+              </div>
+            </div>
+
+            <button type="button" class="btn-next" id="nextBtn1">
+              Continue <span class="btn-arrow">→</span>
+            </button>
+          </div>
+
+          <!-- ── STEP 2 ── -->
+          <div class="form-step hidden" id="step-2">
+
+            <div class="two-col">
+              <div class="field-group">
+                <label class="field-label" for="skillLevel">Current Level</label>
+                <div class="select-wrapper">
+                  <select id="skillLevel" name="skillLevel" class="field-input field-select">
+                    <option value="">Select…</option>
+                    <option value="beginner">🌱 Beginner — No prior experience</option>
+                    <option value="intermediate">🌿 Intermediate — Some basics known</option>
+                    <option value="advanced">🌳 Advanced — Want to go deeper</option>
+                  </select>
+                </div>
+                <div class="field-error" id="levelError">Please select your skill level.</div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="duration">Target Duration</label>
+                <div class="select-wrapper">
+                  <select id="duration" name="duration" class="field-input field-select">
+                    <option value="">Select…</option>
+                    <option value="4">4 Weeks — Intensive sprint</option>
+                    <option value="8">8 Weeks — Balanced pace</option>
+                    <option value="12">12 Weeks — Standard course</option>
+                    <option value="24">24 Weeks — Deep mastery</option>
+                  </select>
+                </div>
+                <div class="field-error" id="durationError">Please select a duration.</div>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="hoursPerWeek">Hours Per Week Available</label>
+              <div class="range-row">
+                <input type="range" id="hoursPerWeek" name="hoursPerWeek" min="2" max="40" value="10" class="range-input" />
+                <span class="range-val" id="rangeVal">10 hrs/week</span>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Learning Style (choose all that apply)</label>
+              <div class="checkbox-grid">
+                <label class="check-card">
+                  <input type="checkbox" name="style" value="video" checked />
+                  <span class="check-icon">📹</span>
+                  <span>Video Lectures</span>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" name="style" value="reading" />
+                  <span class="check-icon">📖</span>
+                  <span>Reading / Docs</span>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" name="style" value="projects" checked />
+                  <span class="check-icon">🛠️</span>
+                  <span>Hands-on Projects</span>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" name="style" value="problems" />
+                  <span class="check-icon">🧩</span>
+                  <span>Problem Solving</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="email">Email — Get your course plan delivered</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="field-input"
+                placeholder="you@example.com"
+              />
+              <div class="field-error" id="emailError">Please enter a valid email address.</div>
+            </div>
+
+            <div class="btn-row">
+              <button type="button" class="btn-back" id="backBtn2">← Back</button>
+              <button type="button" class="btn-next" id="nextBtn2">
+                Review &amp; Generate <span class="btn-arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ── STEP 3 ── -->
+          <div class="form-step hidden" id="step-3">
+            <div class="review-header">
+              <span class="review-icon">✦</span>
+              <h2 class="review-title">Your Course Plan</h2>
+            </div>
+
+            <div class="review-grid" id="reviewGrid">
+              <!-- Filled by JS -->
+            </div>
+
+            <label class="terms-row">
+              <input type="checkbox" id="termsCheck" name="terms" />
+              <span>I agree that my data will only be used to generate my personalized course plan.</span>
+            </label>
+            <div class="field-error" id="termsError">Please accept to continue.</div>
+
+            <div class="btn-row">
+              <button type="button" class="btn-back" id="backBtn3">← Back</button>
+              <button type="submit" class="btn-submit" id="submitBtn">
+                <span class="btn-label">Generate My Course ✦</span>
+                <span class="btn-loader hidden" id="btnLoader">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                  Generating…
+                </span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- Success Screen -->
+    <section class="success-screen hidden" id="successScreen">
+      <div class="success-card">
+        <div class="success-icon-wrap">
+          <svg class="success-svg" viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="28" stroke="var(--accent)" stroke-width="2" class="success-ring"/>
+            <path d="M18 30l9 9 15-15" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="success-check"/>
+          </svg>
+        </div>
+        <h2 class="success-title">Course Request Submitted!</h2>
+        <p class="success-sub">Your course is ready! Taking you to your dashboard now — or click below to go immediately.</p>
+        <div class="success-summary" id="successSummary"></div>
+        <button class="btn-restart" id="restartBtn">Start Course →</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <span>Syllabridge · Free AI-Curated Learning</span>
+    <span class="footer-sep">·</span>
+    <span>Team: Kratik, Satvik, Ashish, Jai</span>
+    <span class="footer-sep">·</span>
+    <span>ES-251 Mini Project 2025-26</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
